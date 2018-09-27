@@ -357,6 +357,7 @@ public class NettyServerImpl implements Server {
         b.childOption(SctpChannelOption.SO_SNDBUF, this.management.getOptionSoSndbuf());
         b.childOption(SctpChannelOption.SO_RCVBUF, this.management.getOptionSoRcvbuf());
         b.childOption(SctpChannelOption.SO_LINGER, this.management.getOptionSoLinger());
+        b.childOption(SctpChannelOption.MAX_MESSAGES_PER_READ, 32);
     }
 
     @Override
