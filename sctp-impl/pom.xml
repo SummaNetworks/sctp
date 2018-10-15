@@ -72,7 +72,26 @@
 						</fileset>
 					</filesets>
 				</configuration>
-			</plugin>					
+			</plugin>
+
+            <!-- Skip nexus deploy configured in parent -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.2</version>
+                <extensions>false</extensions>
+                <configuration>
+                    <!-- You have to ensure that this property evaluates as true in the last module of the reactor -->
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy-to-sonatype</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
 		</plugins>
 	</build>
 	<properties>
