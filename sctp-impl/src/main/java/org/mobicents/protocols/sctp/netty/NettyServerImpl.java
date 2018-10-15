@@ -96,8 +96,8 @@ public class NettyServerImpl implements Server {
 
     /**
      * @param name
-     * @param ip
-     * @param port
+     * @param hostAddress
+     * @param hostport
      * @throws IOException
      */
     public NettyServerImpl(String name, String hostAddress, int hostport, IpChannelType ipChannelType,
@@ -330,10 +330,11 @@ public class NettyServerImpl implements Server {
     }
 
     private void applySctpOptions(ServerBootstrap b) {
+        b.option(SctpChannelOption.SCTP_INIT_MAXSTREAMS, this.management.getOptionSctpInitMaxstreams());
+        // FIXME: 11/10/18 Review if option or childOptions for next:
         b.childOption(SctpChannelOption.SCTP_NODELAY, this.management.getOptionSctpNodelay());
         b.childOption(SctpChannelOption.SCTP_DISABLE_FRAGMENTS, this.management.getOptionSctpDisableFragments());
         b.childOption(SctpChannelOption.SCTP_FRAGMENT_INTERLEAVE, this.management.getOptionSctpFragmentInterleave());
-        b.childOption(SctpChannelOption.SCTP_INIT_MAXSTREAMS, this.management.getOptionSctpInitMaxstreams());
         b.childOption(SctpChannelOption.SO_SNDBUF, this.management.getOptionSoSndbuf());
         b.childOption(SctpChannelOption.SO_RCVBUF, this.management.getOptionSoRcvbuf());
         b.childOption(SctpChannelOption.SO_LINGER, this.management.getOptionSoLinger());
