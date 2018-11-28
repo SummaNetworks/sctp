@@ -135,28 +135,6 @@
                 <role>Active Developer</role>
             </roles>
         </developer>
-		<developer>
-			<id>serg.vetyutnev</id>
-			<name>Sergey</name>
-			<email>serg.vetyutnev@gmail.com</email>
-			<organization>TeleStax</organization>
-			<organizationUrl>http://telestax.com/</organizationUrl>
-			<roles>
-				<role>Active Developer</role>
-			</roles>
-			<timezone>+3</timezone>
-		</developer>
-		<developer>
-			<id>amit.bhayani</id>
-			<name>Amit Bhayani</name>
-			<email>amit.bhayani@gmail.com</email>
-			<organization>TeleStax</organization>
-			<organizationUrl>http://telestax.com/</organizationUrl>
-			<roles>
-				<role>Active Developer</role>
-			</roles>
-			<timezone>+5.5</timezone>
-		</developer>
 	</developers>
 	<licenses>
 		<license>
@@ -238,6 +216,18 @@
 	</scm>
 	<!-- repositories -->
 	<repositories>
+        <repository>
+            <id>onevox</id>
+            <name>Onevox repository</name>
+            <url>http://devel.onevox.io/repository</url>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <url>https://devel.onevox.io/repository-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
 		<repository>
 			<id>restcomm-public-repository-group</id>
 			<name>Restcomm Public Maven Repository Group</name>
