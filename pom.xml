@@ -9,7 +9,7 @@
 
 	<groupId>org.mobicents.protocols.sctp</groupId>
 	<artifactId>sctp-parent</artifactId>
-	<version>2.0.16-SUMMA-1.0.0-SNAPSHOT</version>
+	<version>2.0.16-SUMMA-1.0.1-SNAPSHOT</version>
 	<name>Summanetworks mod :: Restcomm :: SCTP :: Parent :: ${pom.artifactId}</name>
 	<packaging>pom</packaging>
 
@@ -67,11 +67,12 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.3</version>
 						<configuration>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
 							<allowTimestampedSnapshots>true</allowTimestampedSnapshots>
 							<preparationGoals>clean install</preparationGoals>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
-                            <tagNameFormat>@{project.version}</tagNameFormat>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -94,7 +95,7 @@
 			</activation>
 			<build>
 				<plugins>
-					<plugin>
+					<!-- plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
 						<executions>
@@ -106,7 +107,7 @@
 								</goals>
 							</execution>
 						</executions>
-					</plugin>
+					</plugin -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
@@ -214,7 +215,8 @@
 		<connection>scm:git:https://github.com/SummaNetworks/sctp.git</connection>
 		<developerConnection>scm:git:https://github.com/SummaNetworks/sctp.git</developerConnection>
 		<url>https://github.com/SummaNetworks/sctp</url>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
 	<!-- repositories -->
 	<repositories>
         <repository>
