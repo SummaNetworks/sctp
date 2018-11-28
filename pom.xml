@@ -71,6 +71,7 @@
 							<allowTimestampedSnapshots>true</allowTimestampedSnapshots>
 							<preparationGoals>clean install</preparationGoals>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -211,7 +212,7 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/SummaNetworks/sctp.git</connection>
-		<developerConnection>scm:git:git@github.com:SummaNetworks/sctp.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/SummaNetworks/sctp.git</developerConnection>
 		<url>https://github.com/SummaNetworks/sctp</url>
 	</scm>
 	<!-- repositories -->
