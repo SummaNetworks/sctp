@@ -11,7 +11,7 @@
 	
 	<artifactId>sctp-release</artifactId>
   	<version>2.22</version>
-	<name>Summanetworks mod :: Restcomm :: Release :: ${pom.artifactId}</name>
+	<name>Summanetworks mod :: Restcomm :: Release :: ${project.artifactId}</name>
 	<profiles>
 		<profile>
 			<id>release</id>

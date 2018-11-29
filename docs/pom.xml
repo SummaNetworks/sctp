@@ -11,7 +11,7 @@
 
 	<artifactId>restcomm-sctp-docs</artifactId>
 	<groupId>org.mobicents.protocols.sctp.docs</groupId>
-	<name>Restcomm :: SCTP :: Docs :: Parent :: ${pom.artifactId}</name>
+	<name>Restcomm :: SCTP :: Docs :: Parent :: ${project.artifactId}</name>
 	<packaging>pom</packaging>
 
 	<properties>

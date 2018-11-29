@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>sctp-api</artifactId>
-	<name>Summanetworks mod :: Restcomm :: SCTP :: API :: ${pom.artifactId}</name>
+	<name>Summanetworks mod :: Restcomm :: SCTP :: API :: ${project.artifactId}</name>
 
 
 	<dependencies>
