@@ -1,0 +1,38 @@
+#Ask for versions names:
+>mvn release:prepare -Darguments="-Dmaven.test.skip=true"
+
+
+#With inline configuration:
+mvn -Dtag=TAG-VERSION release:prepare -DreleaseVersion=RELEASE-VERSION -DdevelopmentVersion=NEXT-SNAPSHOT-VERSION -Darguments="-Dmaven.test.skip=true"
+#Ex:
+>mvn -B -Dtag=2.0.16-SUMMA-1.0.0 release:prepare -DreleaseVersion=2.0.16-SUMMA-1.0.0 -DdevelopmentVersion=2.0.16-SUMMA-1.0.1-SNAPSHOT -Darguments="-Dmaven.test.skip=true"
+
+
+#Perform to upload artifacts to repositories:
+>mvn release:perform -Darguments="-Dgpg.skip -Dmaven.test.skip=true"
+
+
+# Añadir en el setting.xml
+<settings>
+   <servers>
+      <server>
+         <id>git</id>
+         <username>myUser</username>
+         <password>myPassword</password>
+      </server>
+   </servers>
+</settings>
+
+
+#If repeat:
+#Delete tag just created:
+>git tag -d TagName
+# En remoto si se ha hecho el push
+>git push summa :TagName
+
+#Rollback changes (not needed if pom has to not change)
+mvn release:rollback
+
+#Troubleshooting:
+#Tags is created before remove SNAPSHOT, execute next in client:
+git config --add status.displayCommentPrefix true
