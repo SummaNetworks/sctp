@@ -1,77 +1,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>org.mobicents</groupId>
+		<artifactId>restcomm-parent</artifactId>
+		<version>2.27.32</version>
+	</parent>
+
 	<groupId>org.mobicents.protocols.sctp</groupId>
 	<artifactId>sctp-parent</artifactId>
 	<version>2.0.16-SUMMA-1.0.0-SNAPSHOT</version>
 	<name>Summanetworks mod :: Restcomm :: SCTP :: Parent :: ${project.artifactId}</name>
 	<packaging>pom</packaging>
 
-	<properties>
 
+	<properties>
+		<log4j.version>1.2.8</log4j.version>
+		<javolution.version>5.5.1</javolution.version>
 		<commons.version>1.0.0.CR1</commons.version>
 		<testng.version>6.2</testng.version>
 		<!-- netty.version>4.0.33.Final</netty.version -->
         <netty.version>4.1.1.Final</netty.version>
-
-        <!-- build properties -->
-        <compile.debug>true</compile.debug>
-        <compile.source>1.7</compile.source>
-        <compiler.plugin.version>2.0.2</compiler.plugin.version>
-
+		<compiler.plugin.version>2.0.2</compiler.plugin.version>
+		<compile.source>1.7</compile.source>
         <!-- TLS error using push with inline credentials -->
         <!-- project.scm.id>github-summa</project.scm.id -->
-
-        <!-- dependency versions -->
-        <jboss.version>5.1.0.GA</jboss.version>
-        <junit.version>4.1</junit.version>
-
-        <javolution.version>5.5.1</javolution.version>
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.5.5</slf4j.version>
-        <commons-logging.version>1.0.4</commons-logging.version>
-        <concurrent.version>1.3.4</concurrent.version>
-
-        <jain-slee.version>1.1</jain-slee.version>
-        <commons-pool.version>1.4</commons-pool.version>
-        <ant.version>1.6.5</ant.version>
-        <jain-sip-api.version>1.2.0</jain-sip-api.version>
-        <jain-sip-ri.version>1.2.259</jain-sip-ri.version>
-        <jain-mgcp.version>1.0</jain-mgcp.version>
-        <servlet-api.version>2.4</servlet-api.version>
-        <rome.version>0.9</rome.version>
-        <commons.httpclient.version>3.1</commons.httpclient.version>
-        <jdom.version>1.0</jdom.version>
-        <xmlpull.version>1.1.3.4d_b4_min</xmlpull.version>
-        <jzlib.version>1.0.7</jzlib.version>
-        <smpp.version>0.3.7</smpp.version>
-        <jaxb.version>2.1</jaxb.version>
-        <clover.version>2.6.3</clover.version>
-
-        <!-- SEAM -->
-        <jboss-seam.version>2.2.0.GA</jboss-seam.version>
-        <jboss-el.version>1.0_02.CR5</jboss-el.version>
-        <hibernate-search.version>3.0.1.GA</hibernate-search.version>
-        <jbpm.version>3.2.1</jbpm.version>
-        <jsf-facelets.version>1.1.15.B1</jsf-facelets.version>
-
-        <node>default</node>
-        <jboss.home>${env.JBOSS_HOME}</jboss.home>
-
-        <!-- redefine in your POM if you want to change in manifest file -->
-        <manifest.url>http://www.restcomm.org</manifest.url>
-        <manifest.implementation.title>${project.groupId}:${project.artifactId}</manifest.implementation.title>
-        <manifest.implementation.version>${project.version}</manifest.implementation.version>
-        <manifest.implementation.vendor>TeleStax, Inc.</manifest.implementation.vendor>
-
-        <!-- default versions for restcomm maven plugins and other base restcomm APIs -->
-        <!--<restcomm.slee.tools.mavenplugin.du.version>2.0.1.FINAL</restcomm.slee.tools.mavenplugin.du.version>-->
-        <restcomm.slee.tools.mavenplugin.du.version>3.0.13</restcomm.slee.tools.mavenplugin.du.version>
-        <restcomm.slee.tools.mavenplugin.library.version>1.0.0.FINAL</restcomm.slee.tools.mavenplugin.library.version>
-        <restcomm.tools.mavenplugin.eclipse.version>1.0.1.FINAL</restcomm.tools.mavenplugin.eclipse.version>
-        <restcomm.slee.api.extensions.version>1.0.0.FINAL</restcomm.slee.api.extensions.version>
-
-        <license.year>2011</license.year>
 	</properties>
 	<modules>
 		<module>sctp-api</module>
@@ -79,175 +32,6 @@
 	</modules>
 	<dependencyManagement>
 		<dependencies>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-component-matrix</artifactId>
-                <version>${jboss.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-cluster</artifactId>
-                <version>${jboss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-jmx</artifactId>
-                <version>${jboss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-j2se</artifactId>
-                <version>${jboss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-system-jmx</artifactId>
-                <version>${jboss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-server</artifactId>
-                <version>${jboss.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossas</groupId>
-                <artifactId>jboss-as-console</artifactId>
-                <version>${jboss.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.slee</groupId>
-                <artifactId>jain-slee</artifactId>
-                <version>${jain-slee.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.restcomm.servers.jainslee.api</groupId>
-                <artifactId>jain-slee-11-ext</artifactId>
-                <version>${restcomm.slee.api.extensions.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>ant</groupId>
-                <artifactId>ant</artifactId>
-                <version>${ant.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-pool</groupId>
-                <artifactId>commons-pool</artifactId>
-                <version>${commons-pool.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>jain</groupId>
-                <artifactId>jain-mgcp-ri</artifactId>
-                <version>${jain-mgcp.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.sip</groupId>
-                <artifactId>jain-sip-api</artifactId>
-                <version>${jain-sip-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.sip</groupId>
-                <artifactId>jain-sip-ri</artifactId>
-                <version>${jain-sip-ri.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>rome</groupId>
-                <artifactId>rome</artifactId>
-                <version>${rome.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.xml</groupId>
-                <artifactId>jaxb-impl</artifactId>
-                <version>${jaxb.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>${commons.httpclient.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>jdom</groupId>
-                <artifactId>jdom</artifactId>
-                <version>${jdom.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>ie.omk</groupId>
-                <artifactId>smppapi</artifactId>
-                <version>${smpp.version}</version>
-            </dependency>
-
-            <!-- SEAM and converged demo -->
-            <dependency>
-                <groupId>org.jboss.seam</groupId>
-                <artifactId>jboss-el</artifactId>
-                <version>${jboss-el.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.seam</groupId>
-                <artifactId>jboss-seam</artifactId>
-                <version>${jboss-seam.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-search</artifactId>
-                <version>${hibernate-search.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jbpm</groupId>
-                <artifactId>jbpm-jpdl</artifactId>
-                <version>${jbpm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.seam</groupId>
-                <artifactId>jboss-seam-debug</artifactId>
-                <version>${jboss-seam.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.seam</groupId>
-                <artifactId>jboss-seam-ui</artifactId>
-                <version>${jboss-seam.version}</version>
-            </dependency>
-            <dependency>
-                <groupId> com.sun.facelets</groupId>
-                <artifactId> jsf-facelets</artifactId>
-                <version>${jsf-facelets.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.seam</groupId>
-                <artifactId>jboss-seam</artifactId>
-                <version>${jboss-seam.version}</version>
-                <type>ejb</type>
-            </dependency>
 			<dependency>
 				<groupId>org.mobicents.commons</groupId>
 				<artifactId>commons</artifactId>
@@ -343,27 +127,6 @@
 				</plugins>
 			</build>
 		</profile>
-        <profile>
-            <id>attach-sources</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>2.1.2</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
 	</profiles>
 	<developers>
         <developer>
@@ -413,37 +176,6 @@
                 <version>1.0</version>
             </extension>
         </extensions>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.2-beta-4</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.mobicents.tools</groupId>
-                    <artifactId>maven-du-plugin</artifactId>
-                    <version>${restcomm.slee.tools.mavenplugin.du.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.mobicents.tools</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>${restcomm.tools.mavenplugin.eclipse.version}</version>
-                    <extensions>true</extensions>
-                </plugin>
-                <plugin>
-                    <groupId>org.mobicents.tools</groupId>
-                    <artifactId>maven-library-plugin</artifactId>
-                    <version>${restcomm.slee.tools.mavenplugin.library.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.jboss.maven.plugins</groupId>
-                    <artifactId>maven-jdocbook-plugin</artifactId>
-                    <version>2.3.7</version>
-                    <extensions>true</extensions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -477,44 +209,7 @@
 					<debug>${compile.debug}</debug>
 				</configuration>
 			</plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.4</version>
-                <executions>
-                    <execution>
-                        <id>bundle-manifest</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>manifest</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <supportedProjectTypes>
-                        <supportedProjectType>jar</supportedProjectType>
-                        <supportedProjectType>bundle</supportedProjectType>
-                        <supportedProjectType>war</supportedProjectType>
-                    </supportedProjectTypes>
-                    <instructions>
-                        <Implementation-Title>${manifest.implementation.title}</Implementation-Title>
-                        <Implementation-Version>${manifest.implementation.version}</Implementation-Version>
-                        <Implementation-Vendor-Id>${manifest.implementation.vendor}</Implementation-Vendor-Id>
-                        <Implementation-URL>${manifest.url}</Implementation-URL>
-                        <SVN-Revision>${buildNumber}</SVN-Revision>
-                    </instructions>
-                </configuration>
-            </plugin>
+
 		</plugins>
 	</build>
 
@@ -522,8 +217,7 @@
 		<connection>scm:git:https://github.com/SummaNetworks/sctp.git</connection>
 		<developerConnection>scm:git:https://github.com/SummaNetworks/sctp.git</developerConnection>
 		<url>https://github.com/SummaNetworks/sctp</url>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 	<!-- repositories -->
 	<repositories>
         <repository>
@@ -566,21 +260,6 @@
 				<updatePolicy>never</updatePolicy>
 			</snapshots>
 		</repository>
-        <repository>
-            <id>jboss-deprecated-repository</id>
-            <name>JBoss Deprecated Maven Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/deprecated/
-            </url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
 		<repository>
 			<id>jboss-3rd-party-repository-group</id>
 			<name>JBoss ThirdParty Releases Repository Group</name>
@@ -634,34 +313,4 @@
 			</releases>
 		</repository>
 	</repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>restcomm-public-repository-group</id>
-            <name>Restcomm Public Maven Repository Group</name>
-            <url>https://oss.sonatype.org/content/groups/public</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Maven Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
