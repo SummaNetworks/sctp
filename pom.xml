@@ -9,13 +9,16 @@
 
 	<properties>
 
-
 		<commons.version>1.0.0.CR1</commons.version>
 		<testng.version>6.2</testng.version>
 		<!-- netty.version>4.0.33.Final</netty.version -->
         <netty.version>4.1.1.Final</netty.version>
-		<compiler.plugin.version>2.0.2</compiler.plugin.version>
-		<compile.source>1.7</compile.source>
+
+        <!-- build properties -->
+        <compile.debug>true</compile.debug>
+        <compile.source>1.7</compile.source>
+        <compiler.plugin.version>2.0.2</compiler.plugin.version>
+
         <!-- TLS error using push with inline credentials -->
         <!-- project.scm.id>github-summa</project.scm.id -->
 
@@ -52,9 +55,6 @@
         <jbpm.version>3.2.1</jbpm.version>
         <jsf-facelets.version>1.1.15.B1</jsf-facelets.version>
 
-        <!-- build properties -->
-        <compile.debug>true</compile.debug>
-        <compile.source>1.5</compile.source>
         <node>default</node>
         <jboss.home>${env.JBOSS_HOME}</jboss.home>
 
