@@ -2,6 +2,7 @@ target
 /.classpath
 /.project
 *.iml
+/.idea
 /ManagementTest_sctp.xml
 /sctptest.log
 /test-output/
