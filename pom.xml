@@ -518,16 +518,16 @@
 		</plugins>
 	</build>
 
-	<!-- scm>
+	<scm>
 		<connection>scm:git:https://github.com/SummaNetworks/sctp.git</connection>
 		<developerConnection>scm:git:https://github.com/SummaNetworks/sctp.git</developerConnection>
 		<url>https://github.com/SummaNetworks/sctp</url>
-    </scm -->
-    <scm>
+    </scm>
+    <!-- scm>
         <connection>scm:git:git://github.com/SummaNetworks/sctp.git</connection>
         <developerConnection>scm:git:git@github.com:SummaNetworks/sctp.git</developerConnection>
         <url>https://github.com/SummaNetworks/sctp</url>
-    </scm>
+    </scm -->
 	<!-- repositories -->
 	<repositories>
         <repository>
