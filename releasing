@@ -26,7 +26,10 @@ mvn release:rollback
 
 #Troubleshooting:
 #Tags is created before remove SNAPSHOT, execute next in client:
-git config --add status.displayCommentPrefix true
+>git config --add status.displayCommentPrefix true
+#If while release:prepare using credential from server.xml maven return error while git-push operation:
+#gnutls_handshake() failed: An unexpected TLS packet was received
+>git config --global http.sslVerify false
 
 
 ## Se supone que deberia poder leer las credenciales del setting.xml en .m2 pero no conecta bien, un error del TLS.
