@@ -26,7 +26,7 @@
 		<compiler.plugin.version>2.0.2</compiler.plugin.version>
 
         <!-- TLS error using push with inline credentials -->
-        <!-- project.scm.id>github-summa</project.scm.id -->
+        <project.scm.id>github-summa</project.scm.id>
 
         <!-- dependency versions -->
         <jboss.version>5.1.0.GA</jboss.version>
