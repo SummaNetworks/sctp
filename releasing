@@ -28,7 +28,7 @@ mvn release:rollback
 #Tags is created before remove SNAPSHOT, execute next in client:
 >git config --add status.displayCommentPrefix true
 #If while release:prepare using credential from server.xml maven return error while git-push operation:
-#gnutls_handshake() failed: An unexpected TLS packet was received
+#fatal: unable to access 'https://myUser:myPassword@github.com/SummaNetworks/sctp.git/': gnutls_handshake() failed: An unexpected TLS packet was received.
 >git config --global http.sslVerify false
 
 
