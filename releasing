@@ -32,7 +32,7 @@ mvn release:rollback
 >git config --global http.sslVerify false
 #If previous doesn't work, try to scape username and password in setting.xml, for example, replace @ by %40, and ! by %21.
 #If upload snapshot instead of release:
->git config --global status.displayCommentPref
+>git config --global status.displayCommentPrefix true
 
 ## Se supone que deberia poder leer las credenciales del setting.xml en .m2 pero no conecta bien, un error del TLS.
 # Ademas hay que incluir la propiedad project.scm.id con el valor del id usado en el xml.
@@ -50,8 +50,8 @@ mvn release:rollback
 ## Integracion con Jenkins:
 # Debido a bug entre el plugin de release y el git, en lugar de desplegar release, despliega snapshots.
 # Para solucionarlo hay que configurar el git con:
->git config --global status.displayCommentPref
-# Que en el caso del jeknins, lo pondremos como "Pre Step"
+>git config --global status.displayCommentPrefix true
+# Que en el caso del jeknins, lo pondremos como "Pre Step" como ejecución de shell.
 # Despues de este cambio es posible que al sacar la release aparezca el error:
 Detecting the current branch failed: fatal: ref HEAD is not a symbolic ref
 # seguramente es porque estamos en releando una rama por lo que añadiremos el "Aditional Behaviours -> Checkout to specific local branch" y seleccionamos la rama que estamos releseando.
