@@ -468,7 +468,6 @@
 		<connection>scm:git:https://github.com/SummaNetworks/sctp.git</connection>
 		<developerConnection>scm:git:https://github.com/SummaNetworks/sctp.git</developerConnection>
 		<url>https://github.com/SummaNetworks/sctp</url>
-    <tag>HEAD</tag>
   </scm>
     <!-- scm>
         <connection>scm:git:git://github.com/SummaNetworks/sctp.git</connection>
