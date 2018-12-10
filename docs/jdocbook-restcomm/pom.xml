@@ -60,7 +60,7 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>${pom.groupId}</groupId>
+									<groupId>${project.groupId}</groupId>
 									<artifactId>restcomm-sctp-docs-sources-restcomm</artifactId>
 									<version>${pom.version}</version>
 									<type>jar</type>

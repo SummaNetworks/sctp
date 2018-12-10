@@ -23,7 +23,7 @@
 			<version>${javolution.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${pom.groupId}</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>sctp-api</artifactId>
 			<version>${pom.version}</version>
 		</dependency>
