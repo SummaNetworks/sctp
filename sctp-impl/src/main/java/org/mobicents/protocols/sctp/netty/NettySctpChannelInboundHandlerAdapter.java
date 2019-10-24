@@ -104,7 +104,7 @@ public class NettySctpChannelInboundHandlerAdapter extends ChannelInboundHandler
                     break;
                 case COMM_LOST:
                     logger.warn(String.format("Communication lost for Association=%s", association.getName()));
-
+                    logger.warn(String.format("Event: %s", not.toString()));
                     // Close the Socket
                     association.getAssociationListener().onCommunicationLost(association);
                     ctx.close();
@@ -188,8 +188,8 @@ public class NettySctpChannelInboundHandlerAdapter extends ChannelInboundHandler
             payload = new PayloadData(byteBuf.readableBytes(), byteBuf, true, false, 0, 0);
         }
 
-        if (logger.isDebugEnabled()) {
-            logger.debug(String.format("Rx : Ass=%s %s", this.association.getName(), payload));
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("Rx : Ass=%s %s", this.association.getName(), payload));
         }
 
         this.association.read(payload);

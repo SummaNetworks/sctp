@@ -88,7 +88,11 @@ public class NettySctpServerHandler extends NettySctpChannelInboundHandlerAdapte
             if (serverImpl.getName().equals(association.getServerName())
                     && association.getAssociationType() == AssociationType.SERVER) {
                 // compare port and ip of remote with provisioned
-                if ((port == association.getPeerPort()) && (host.equals(association.getPeerAddress()))) {
+                if ((port == association.getPeerPort() || association.getPeerPort()==0) &&
+                        (host.equals(association.getPeerAddress())
+                        ||  equalsToSomeExtraHost(host, association)
+                        )
+                ) {
                     provisioned = true;
 
                     if (!association.isStarted()) {
@@ -173,6 +177,17 @@ public class NettySctpServerHandler extends NettySctpChannelInboundHandlerAdapte
                     port));
             ctx.close();
         }
+    }
+
+    private boolean equalsToSomeExtraHost(String host, NettyAssociationImpl association){
+        boolean result = false;
+        if(association.getExtraHostAddresses() != null){
+            for(String extra : association.getExtraHostAddresses()){
+                result = host.equals(extra);
+                if(result) break;
+            }
+        }
+        return result;
     }
 
     @Override

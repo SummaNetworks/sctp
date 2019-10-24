@@ -90,6 +90,8 @@ public class NettyAssociationImpl implements Association {
 
     // Is the Association been started by management?
     private volatile boolean started = false;
+
+    private volatile boolean isFirstStart = true;
     // Is the Association up (connection is established)
     protected volatile boolean up = false;
 
@@ -150,13 +152,10 @@ public class NettyAssociationImpl implements Association {
 
     /**
      * Creating an ANONYMOUS_SERVER Association
-     * 
-     * @param hostAddress
-     * @param hostPort
+     *
      * @param peerAddress
      * @param peerPort
      * @param serverName
-     * @param assocName
      * @param ipChannelType
      */
     protected NettyAssociationImpl(String peerAddress, int peerPort, String serverName, IpChannelType ipChannelType,
@@ -167,9 +166,7 @@ public class NettyAssociationImpl implements Association {
         this.serverName = serverName;
         this.ipChannelType = ipChannelType;
         this.server = server;
-
         this.type = AssociationType.ANONYMOUS_SERVER;
-
     }
 
     public NettySctpManagementImpl getManagement() {
@@ -324,8 +321,8 @@ public class NettyAssociationImpl implements Association {
      */
     @Override
     public void send(PayloadData payloadData) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug(String.format("Tx : Ass=%s %s", this.getName(), payloadData));
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("Tx : Ass=%s %s", this.getName(), payloadData));
         }
 
         NettySctpChannelInboundHandlerAdapter handler = checkSocketIsOpen();
@@ -460,9 +457,11 @@ public class NettyAssociationImpl implements Association {
             throw new NullPointerException(String.format("AssociationListener is null for Associatoion=%s", this.name));
         }
 
-        if (this.type == AssociationType.CLIENT) {
+        if (this.type == AssociationType.CLIENT && this.isFirstStart) {
             this.scheduleConnect();
         }
+
+        isFirstStart = false;
 
         this.started = true;
 
@@ -605,6 +604,9 @@ public class NettyAssociationImpl implements Association {
         } catch (Exception e) {
             logger.error(String.format("Exception while creating connection for Association=%s", this.getName()), e);
             this.scheduleConnect();
+            return;
+        } catch (Throwable t){
+            logger.error(String.format("Throwable Exception while creating connection for Association=%s", this.getName()), t);
             return;
         }
 

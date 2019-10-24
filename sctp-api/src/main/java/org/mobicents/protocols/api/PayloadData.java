@@ -39,6 +39,7 @@ public class PayloadData {
 	private final boolean unordered;
 	private final int payloadProtocolId;
 	private final int streamNumber;
+	private final long creationTime;
 
     /**
      * @param dataLength
@@ -62,6 +63,7 @@ public class PayloadData {
         this.unordered = unordered;
         this.payloadProtocolId = payloadProtocolId;
         this.streamNumber = streamNumber;
+        this.creationTime = System.currentTimeMillis();
     }
 
     /**
@@ -86,6 +88,7 @@ public class PayloadData {
         this.unordered = unordered;
         this.payloadProtocolId = payloadProtocolId;
         this.streamNumber = streamNumber;
+        this.creationTime = System.currentTimeMillis();
     }
 
 	/**
@@ -155,11 +158,16 @@ public class PayloadData {
 		return streamNumber;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
+
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    /*
+         * (non-Javadoc)
+         *
+         * @see java.lang.Object#toString()
+         */
 	@Override
 	public String toString() {
         byte[] array = new byte[byteBuf.readableBytes()];
@@ -168,7 +176,9 @@ public class PayloadData {
         StringBuffer sb = new StringBuffer();
         sb.append("PayloadData [dataLength=").append(dataLength).append(", complete=").append(complete).append(", unordered=")
                 .append(unordered).append(", payloadProtocolId=").append(payloadProtocolId).append(", streamNumber=")
-                .append(streamNumber).append(", data=\n").append(HexTools.dump(array, 0)).append("]");
+                .append(streamNumber).append(", creationTime").append(creationTime)
+                .append(", data=\n")
+                .append(HexTools.dump(array, 0)).append("]");
         return sb.toString();
 	}
 
