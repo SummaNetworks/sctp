@@ -1329,7 +1329,7 @@ public class NettySctpManagementImpl implements Management {
     }
 
     @SuppressWarnings("unchecked")
-    private void load() throws FileNotFoundException {
+    private void load() throws FileNotFoundException, XMLStreamException{
         XMLObjectReader reader = null;
         try {
             reader = XMLObjectReader.newInstance(new FileInputStream(persistFile.toString()));
@@ -1405,6 +1405,7 @@ public class NettySctpManagementImpl implements Management {
             }
 
             this.associations = reader.read(ASSOCIATIONS, AssociationMap.class);
+
             for (FastMap.Entry<String, Association> n = this.associations.head(), end = this.associations.tail(); (n = n
                     .getNext()) != end;) {
                 NettyAssociationImpl associationTemp = (NettyAssociationImpl) n.getValue();
@@ -1412,8 +1413,8 @@ public class NettySctpManagementImpl implements Management {
             }
 
         } catch (XMLStreamException ex) {
-            // this.logger.info(
-            // "Error while re-creating Linksets from persisted file", ex);
+             this.logger.warn("Error while loading configuration form XML", ex);
+             throw ex;
         }
     }
 

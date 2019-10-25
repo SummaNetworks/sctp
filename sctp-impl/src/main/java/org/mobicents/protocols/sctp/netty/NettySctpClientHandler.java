@@ -24,6 +24,7 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.net.InetSocketAddress;
 
+import io.netty.channel.ConnectTimeoutException;
 import org.apache.log4j.Logger;
 import org.mobicents.protocols.api.IpChannelType;
 
@@ -49,8 +50,12 @@ public class NettySctpClientHandler extends NettySctpChannelInboundHandlerAdapte
     public void channelUnregistered(final ChannelHandlerContext ctx) throws Exception {
         logger.warn(String.format("ChannelUnregistered event: association=%s", association));
         this.association.setChannelHandler(null);
-
-        this.association.scheduleConnect();
+        if(this.association.getMainConnectionFuture().cause() != null && this.association.getMainConnectionFuture().cause() instanceof ConnectTimeoutException){
+            //Try next association:
+            this.association.scheduleConnect(true);
+        }else {
+            this.association.scheduleConnect();
+        }
     }
 
     @Override

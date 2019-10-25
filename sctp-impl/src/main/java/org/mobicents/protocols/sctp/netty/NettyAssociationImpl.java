@@ -98,6 +98,8 @@ public class NettyAssociationImpl implements Association {
     private NettySctpChannelInboundHandlerAdapter channelHandler;
     protected int congLevel;
 
+    private ChannelFuture mainConnectionFuture;
+
     public NettyAssociationImpl() {
         super();
     }
@@ -314,6 +316,11 @@ public class NettyAssociationImpl implements Association {
         return extraHostAddresses;
     }
 
+
+    public ChannelFuture getMainConnectionFuture() {
+        return mainConnectionFuture;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -388,7 +395,6 @@ public class NettyAssociationImpl implements Association {
             throw new UnsupportedOperationException(
                     "Association.acceptAnonymousAssociation() can be applied only for anonymous associations");
         }
-
         this.start();
     }
 
@@ -412,7 +418,6 @@ public class NettyAssociationImpl implements Association {
             throw new UnsupportedOperationException(
                     "Association.stopAnonymousAssociation() can be applied only for anonymous associations");
         }
-
         this.stop();
     }
 
@@ -460,14 +465,14 @@ public class NettyAssociationImpl implements Association {
         if (this.type == AssociationType.CLIENT && this.isFirstStart) {
             this.scheduleConnect();
         }
-
         isFirstStart = false;
-
         this.started = true;
 
         if (logger.isInfoEnabled()) {
             if (this.type != AssociationType.ANONYMOUS_SERVER) {
                 logger.info(String.format("Started Association=%s", this));
+            }else{
+                logger.info(String.format("Started Anonymous Association=%s", this));
             }
         }
 
@@ -550,6 +555,10 @@ public class NettyAssociationImpl implements Association {
     }
 
     protected void scheduleConnect() {
+        scheduleConnect(false);
+    }
+
+    protected void scheduleConnect(final boolean nextHost) {
         int connectDelay = this.management.getConnectDelay();
         if (logger.isDebugEnabled()) {
             logger.debug(String.format("Scheduling of a channel connection: Association=%s, connectDelay=%d", this,
@@ -561,7 +570,7 @@ public class NettyAssociationImpl implements Association {
         loop.schedule(new Runnable() {
             @Override
             public void run() {
-                connect();
+                connect(nextHost);
             }
         }, connectDelay, TimeUnit.MILLISECONDS);
     }
@@ -570,7 +579,8 @@ public class NettyAssociationImpl implements Association {
         this.channelHandler = channelHandler;
     }
 
-    protected void connect() {
+    int peerIdx = 0;
+    private void connect(final boolean nextHost) {
         if (!this.started || this.up) {
             // return if not started or already up
             return;
@@ -602,7 +612,7 @@ public class NettyAssociationImpl implements Association {
 
             localAddress = new InetSocketAddress(this.hostAddress, this.hostPort);
         } catch (Exception e) {
-            logger.error(String.format("Exception while creating connection for Association=%s", this.getName()), e);
+            logger.error(String.format("Exception while creating connection for Association=%s. Trying again...", this.getName()), e);
             this.scheduleConnect();
             return;
         } catch (Throwable t){
@@ -626,22 +636,38 @@ public class NettyAssociationImpl implements Association {
                     for (int count = 0; count < this.extraHostAddresses.length; count++) {
                         String localSecondaryAddress = this.extraHostAddresses[count];
                         InetAddress localSecondaryInetAddress = InetAddress.getByName(localSecondaryAddress);
-
+                        if(logger.isDebugEnabled())
+                            logger.debug("Biding local channel with extra address: "+localSecondaryAddress);
                         sctpChannel.bindAddress(localSecondaryInetAddress).sync();
                     }
                 }
             }
 
-            InetSocketAddress remoteAddress = new InetSocketAddress(this.peerAddress, this.peerPort);
+            //Remote connection:
+            InetSocketAddress remoteAddress;
+            if(peerAddress.contains(",")){
+                String [] remoteIps = this.peerAddress.split(",");
+                String nextIp = remoteIps[0];
+                if(nextHost){
+                    if(++peerIdx > remoteIps.length)
+                        peerIdx = 0;
+                    nextIp = remoteIps[peerIdx];
+                }
+                if(logger.isDebugEnabled()){
+                    logger.debug("Trying to connect to remote address: "+nextIp);
+                }
+                remoteAddress = new InetSocketAddress(nextIp, this.peerPort);
+            }else{
+                remoteAddress = new InetSocketAddress(this.peerAddress, this.peerPort);
+            }
 
-            // Finish connect
-            bindFuture.channel().connect(remoteAddress);
+            mainConnectionFuture = bindFuture.channel().connect(remoteAddress);
             if (logger.isDebugEnabled()) {
                 logger.debug(String.format("Initiating connection scheduled: Association=%s remoteAddress=%s", this,
                         remoteAddress));
             }
         } catch (Exception e) {
-            logger.error(String.format("Exception while finishing connection for Association=%s", this.getName()), e);
+            logger.error(String.format("Exception while starting connection for Association=%s", this.getName()), e);
         }
     }
 
@@ -684,6 +710,10 @@ public class NettyAssociationImpl implements Association {
             for (int i = 0; i < extraHostAddressesSize; i++) {
                 association.extraHostAddresses[i] = xml.get(EXTRA_HOST_ADDRESS, String.class);
             }
+            // TODO: 25/10/19 by Ajimenez - Just clean rest of entries to avoid error.
+//            while(xml.hasNext()){
+//                xml.get(EXTRA_HOST_ADDRESS, String.class);
+//            }
 
         }
 
