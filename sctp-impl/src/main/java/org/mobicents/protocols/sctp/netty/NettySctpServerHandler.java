@@ -24,6 +24,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 
 import javolution.util.FastMap;
 
@@ -87,6 +88,7 @@ public class NettySctpServerHandler extends NettySctpChannelInboundHandlerAdapte
             // check if an association binds to the found server
             if (serverImpl.getName().equals(association.getServerName())
                     && association.getAssociationType() == AssociationType.SERVER) {
+
                 // compare port and ip of remote with provisioned
                 if ((port == association.getPeerPort() || association.getPeerPort()==0) &&
                         (host.equals(association.getPeerAddress())
@@ -97,7 +99,7 @@ public class NettySctpServerHandler extends NettySctpChannelInboundHandlerAdapte
 
                     if (!association.isStarted()) {
                         logger.error(String.format(
-                                "Received connect request for Association=%s but not started yet. Droping the connection!",
+                                "Received connect request for Association=%s but not started yet. Dropping the connection!",
                                 association.getName()));
                         channel.close();
                         return;
@@ -117,7 +119,13 @@ public class NettySctpServerHandler extends NettySctpChannelInboundHandlerAdapte
                     }
 
                     break;
+                }else{
+                    logger.debug(String.format("Current Association configured peer-address %s, extraHostAddress %s and port %d does not match to current peer request. Checking next.",
+                            association.getPeerAddress(), Arrays.toString(association.getExtraHostAddresses()), association.getPeerPort()));
                 }
+            }else{
+                logger.debug(String.format("Current Association server-name %s not equals to current server-name %s. Checking next.",
+                        association.getServerName(), serverImpl.getName()));
             }
         }// for loop
 
