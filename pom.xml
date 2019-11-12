@@ -19,7 +19,7 @@
 		<testng.version>6.2</testng.version>
 <!--        <netty.version>4.0.33.Final</netty.version>-->
         <!-- Update version to use STREAMS and for performance -->
-        <netty.version>4.1.1.Final</netty.version>
+        <netty.version>4.1.30.Final</netty.version>
 
         <!-- build properties -->
         <compile.debug>true</compile.debug>
