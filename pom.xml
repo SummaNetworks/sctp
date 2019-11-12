@@ -9,7 +9,7 @@
 
 	<groupId>org.mobicents.protocols.sctp</groupId>
 	<artifactId>sctp-parent</artifactId>
-	<version>2.0.16-SUMMA-1.0.2</version>
+	<version>2.0.16-SUMMA-2.0.2-SNAPSHOT</version>
 	<name>Summanetworks mod :: Restcomm :: SCTP :: Parent :: ${project.artifactId}</name>
 	<packaging>pom</packaging>
 
@@ -463,7 +463,7 @@
 		<connection>scm:git:https://github.com/SummaNetworks/sctp.git</connection>
 		<developerConnection>scm:git:https://github.com/SummaNetworks/sctp.git</developerConnection>
 		<url>https://github.com/SummaNetworks/sctp</url>
-    <tag>2.0.16-SUMMA-1.0.2</tag>
+    <tag>HEAD</tag>
   </scm>
     <!-- scm>
         <connection>scm:git:git://github.com/SummaNetworks/sctp.git</connection>
