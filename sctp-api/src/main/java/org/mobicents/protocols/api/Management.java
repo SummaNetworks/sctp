@@ -393,6 +393,13 @@ public interface Management {
 	 */
 	public void setWorkerThreads(int workerThreads) throws Exception;
 
+    /**
+     *
+     * @param bossThreads
+     * @throws Exception
+     */
+    public void setBossThreads(int bossThreads) throws Exception;
+
 	/**
      * This method is not used more.
 	 * 

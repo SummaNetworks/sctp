@@ -185,7 +185,16 @@ public class ManagementImpl implements Management {
 //		this.store();
 	}
 
-	/**
+    /**
+     * @param bossThreads
+     * @throws Exception
+     */
+    @Override
+    public void setBossThreads(int bossThreads) throws Exception {
+        //Not implemented.
+    }
+
+    /**
 	 * @return the maxIOErrors
 	 */
 	public int getMaxIOErrors() {

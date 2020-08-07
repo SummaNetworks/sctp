@@ -57,8 +57,9 @@ import com.sun.nio.sctp.SctpStandardSocketOptions;
 import com.sun.nio.sctp.SctpStandardSocketOptions.InitMaxStreams;
 
 /**
+ * The type Netty sctp management.
+ *
  * @author <a href="mailto:amit.bhayani@telestax.com">Amit Bhayani</a>
- * 
  */
 public class NettySctpManagementImpl implements Management {
 
@@ -108,7 +109,8 @@ public class NettySctpManagementImpl implements Management {
     protected double[] congControl_DelayThreshold = new double[] { 2.5, 8, 14 };
     protected double[] congControl_BackToNormalDelayThreshold = new double[] { 1.5, 5.5, 10 };
 
-//    private int workerThreads = DEFAULT_IO_THREADS;
+    private int workerThreads = DEFAULT_IO_THREADS;
+    private int bossThreads = 1;
 //    private boolean singleThread = true;
 
     // private NettyClientOpsThread nettyClientOpsThread = null;
@@ -324,9 +326,8 @@ public class NettySctpManagementImpl implements Management {
 
             logger.info(String.format("SCTP configuration file path %s", persistFile.toString()));
 
-            this.bossGroup = new NioEventLoopGroup(1, new DefaultThreadFactory("Sctp-BossGroup-" + this.name));
-            // TODO: make a thread count for WorkerGroup configurable
-            this.workerGroup = new NioEventLoopGroup(0, new DefaultThreadFactory("Sctp-WorkerGroup-" + this.name));
+            this.bossGroup = new NioEventLoopGroup(bossThreads, new DefaultThreadFactory("Sctp-BossGroup-" + this.name));
+            this.workerGroup = new NioEventLoopGroup(workerThreads, new DefaultThreadFactory("Sctp-WorkerGroup-" + this.name));
             this.clientExecutor = new ScheduledThreadPoolExecutor(1, new DefaultThreadFactory("Sctp-ClientExecutorGroup-"
                     + this.name));
 
@@ -1186,8 +1187,8 @@ public class NettySctpManagementImpl implements Management {
      */
     @Override
     public int getWorkerThreads() {
-        return 1;
-//        return this.workerThreads;
+//        return 1;
+        return this.workerThreads;
     }
 
     /*
@@ -1197,13 +1198,24 @@ public class NettySctpManagementImpl implements Management {
      */
     @Override
     public void setWorkerThreads(int workerThreads) throws Exception {
-//        if (this.started)
-//            throw new Exception("WorkerThreads parameter can be updated only when SCTP stack is NOT running");
-//
-//        if (workerThreads < 1) {
-//            workerThreads = DEFAULT_IO_THREADS;
-//        }
-//        this.workerThreads = workerThreads;
+        if (this.started)
+            throw new Exception("WorkerThreads parameter can be updated only when SCTP stack is NOT running");
+
+        if (workerThreads < 1) {
+            workerThreads = DEFAULT_IO_THREADS;
+        }
+        this.workerThreads = workerThreads;
+    }
+
+
+    @Override
+    public void setBossThreads(int bossThreads) throws Exception{
+        if (this.started)
+            throw new Exception("BossThreads parameter can be updated only when SCTP stack is NOT running");
+        if(bossThreads < 1){
+            bossThreads = 1;
+        }
+        this.bossThreads = bossThreads;
     }
 
     /*
