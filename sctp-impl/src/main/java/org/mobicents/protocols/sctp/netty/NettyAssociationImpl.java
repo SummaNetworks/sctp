@@ -649,7 +649,7 @@ public class NettyAssociationImpl implements Association {
                 String [] remoteIps = this.peerAddress.split(",");
                 String nextIp = remoteIps[0];
                 if(nextHost){
-                    if(++peerIdx > remoteIps.length)
+                    if(++peerIdx >= remoteIps.length)
                         peerIdx = 0;
                     nextIp = remoteIps[peerIdx];
                 }
