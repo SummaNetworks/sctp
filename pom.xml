@@ -20,6 +20,7 @@
 <!--        <netty.version>4.0.33.Final</netty.version>-->
         <!-- Update version to use STREAMS and for performance -->
         <netty.version>4.1.30.Final</netty.version>
+<!--        <netty.version>4.1.45.Final</netty.version>-->
 
         <!-- build properties -->
         <compile.debug>true</compile.debug>

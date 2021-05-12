@@ -590,24 +590,24 @@ public class NettyAssociationImpl implements Association {
             logger.debug(String.format("Initiating connection started: Association=%s", this));
         }
 
-        Bootstrap b;
+        Bootstrap bootstrap;
         InetSocketAddress localAddress;
         try {
             EventLoopGroup group = this.management.getBossGroup();
-            b = new Bootstrap();
+            bootstrap = new Bootstrap();
 
-            b.group(group);
+            bootstrap.group(group);
             if (this.ipChannelType == IpChannelType.SCTP) {
-                b.channel(NioSctpChannel.class);
+                bootstrap.channel(NioSctpChannel.class);
 
                 // applying of stack level SCTP options
-                this.applySctpOptions(b);
-
-                b.handler(new NettySctpClientChannelInitializer(this));
+                this.applySctpOptions(bootstrap);
+                //bootstrap.option(ChannelOption.SO_REUSEADDR, true); //To allow reuse address-port ... it doesn't work.
+                bootstrap.handler(new NettySctpClientChannelInitializer(this));
             } else {
-                b.channel(NioSocketChannel.class);
-                b.option(ChannelOption.TCP_NODELAY, true);
-                b.handler(new NettyTcpClientChannelInitializer(this));
+                bootstrap.channel(NioSocketChannel.class);
+                bootstrap.option(ChannelOption.TCP_NODELAY, true);
+                bootstrap.handler(new NettyTcpClientChannelInitializer(this));
             }
 
             localAddress = new InetSocketAddress(this.hostAddress, this.hostPort);
@@ -622,7 +622,7 @@ public class NettyAssociationImpl implements Association {
 
         // Bind the client channel.
         try {
-            ChannelFuture bindFuture = b.bind(localAddress).sync();
+            ChannelFuture bindFuture = bootstrap.bind(localAddress).sync();
             Channel channel = bindFuture.channel();
 
             if (this.ipChannelType == IpChannelType.SCTP) {
